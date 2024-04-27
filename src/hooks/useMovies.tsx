@@ -1,19 +1,23 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { searchMovies } from "../services/movies";
 
 function useMovies() {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<null | string>(null);
+  const previousSearch = useRef<string | null>(null);
 
   async function getMovies({ search }: { search: string }) {
+    if (search === previousSearch.current) return;
+
     setIsLoading(true);
     setError(null);
-    searchMovies({ search }) // await?
+    previousSearch.current = search;
+    await searchMovies({ search })
       .then((data) => {
         if (data.Response === "False") {
           setData([]);
-          setError("Erro trying to get movies. Try again.");
+          setError(data.Error);
           return;
         }
         setData(data.Search);
@@ -22,7 +26,7 @@ function useMovies() {
       .finally(() => setIsLoading(false));
   }
 
-  return { getMovies, data, isLoading, error };
+  return { getMovies, movies: data, isLoading, error };
 }
 
 export default useMovies;
