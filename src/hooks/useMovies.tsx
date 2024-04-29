@@ -15,7 +15,6 @@ function useMovies() {
     previousSearch.current = search;
     await searchMovies({ search })
       .then(({ ok, error, movies }) => {
-        console.log({ ok, error, movies });
         if (!ok) {
           setData([]);
           setError(error);

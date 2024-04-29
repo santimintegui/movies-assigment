@@ -5,8 +5,6 @@ import { useEffect } from "react";
 function MovieDetails() {
   const { id } = useParams();
   const { movie, isLoading, error, getMovie } = useMovieById();
-  console.log({ movie });
-
   const { title, description, image, released, actors, director, genre } =
     movie;
 

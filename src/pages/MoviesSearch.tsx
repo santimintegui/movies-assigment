@@ -10,26 +10,22 @@ function MoviesSearch() {
 
   const debouncedGetMovies = useCallback(
     debounce((search: any) => {
-      console.log("search", search);
       getMovies({ search });
     }, 400),
     [getMovies]
   );
 
   function handleChange(event: any) {
-    console.log({ event });
-
     const search = event.target.value;
 
     if (search.trim() === "") {
       setErrorInput("Please enter a valid search");
       return;
     }
+
     setErrorInput(null);
     debouncedGetMovies(search);
   }
-
-  console.log({ movies, isLoading, error });
 
   return (
     <div className="flex flex-col gap-10 justify-center items-center pt-16">

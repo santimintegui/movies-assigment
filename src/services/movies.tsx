@@ -7,7 +7,6 @@ async function searchMovies({ search }: { search: string }): Promise<any> {
     `https://www.omdbapi.com/?apikey=${API_KEY}&s=${search}`
   ).then(async (response) => {
     const json: any = await response.json();
-    console.log({ json });
     return {
       ok: json.Response === "True",
       movies: json?.Search?.map((movie: any) => ({
@@ -25,8 +24,6 @@ async function getMovieById({ id }: { id: string }) {
   return await fetch(`https://www.omdbapi.com/?apikey=${API_KEY}&i=${id}`).then(
     async (response) => {
       const json: any = await response.json();
-      console.log({ json });
-
       return {
         id: json.imdbID,
         title: json.Title,
