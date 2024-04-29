@@ -5,6 +5,10 @@ import { useEffect } from "react";
 function MovieDetails() {
   const { id } = useParams();
   const { movie, isLoading, error, getMovie } = useMovieById();
+  console.log({ movie });
+
+  const { title, description, image, released, actors, director, genre } =
+    movie;
 
   useEffect(() => {
     if (id) {
@@ -22,16 +26,16 @@ function MovieDetails() {
         >
           <div className="flex flex-col gap-5">
             <h1 className=" font-bold text-3xl text-center text-black">
-              {movie.Title}
+              {title}
             </h1>
-            <TextITems title="Description" value={movie.Plot} />
-            <TextITems title="Publicated Date" value={movie.Released} />
-            <TextITems title="Genre" value={movie.Genre} />
-            <TextITems title="Actors" value={movie.Actors} />
-            <TextITems title="Director" value={movie.Director} />
+            <TextITems title="Description" value={description} />
+            <TextITems title="Publicated Date" value={released} />
+            <TextITems title="Genre" value={genre} />
+            <TextITems title="Actors" value={actors} />
+            <TextITems title="Director" value={director} />
           </div>
           <div className="flex justify-center">
-            <img src={movie.Poster} alt={movie.Title} />
+            <img src={image} alt={title} />
           </div>
         </div>
       )}

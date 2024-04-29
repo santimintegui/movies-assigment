@@ -29,6 +29,8 @@ function MoviesSearch() {
     debouncedGetMovies(search);
   }
 
+  console.log({ movies, isLoading, error });
+
   return (
     <div className="flex flex-col gap-10 justify-center items-center pt-16">
       <header className=" w-64">

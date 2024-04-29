@@ -5,10 +5,12 @@ type GridListProps = {
 };
 
 function GridList({ data }: GridListProps) {
+  console.log({ data });
+
   return (
     <div className="grid grid-cols-auto-fill gap-5">
       {data.map((movie: any) => (
-        <Card key={movie.imdbID} {...movie} />
+        <Card key={movie.id} {...movie} />
       ))}
     </div>
   );

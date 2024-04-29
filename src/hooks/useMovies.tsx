@@ -14,13 +14,14 @@ function useMovies() {
     setError(null);
     previousSearch.current = search;
     await searchMovies({ search })
-      .then((data) => {
-        if (data.Response === "False") {
+      .then(({ ok, error, movies }) => {
+        console.log({ ok, error, movies });
+        if (!ok) {
           setData([]);
-          setError(data.Error);
+          setError(error);
           return;
         }
-        setData(data.Search);
+        setData(movies);
       })
       .catch((error) => setError(error))
       .finally(() => setIsLoading(false));
