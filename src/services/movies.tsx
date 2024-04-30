@@ -20,23 +20,29 @@ async function searchMovies({ search }: { search: string }): Promise<any> {
   });
 }
 
-async function getMovieById({ id }: { id: string }) {
-  return await fetch(`https://www.omdbapi.com/?apikey=${API_KEY}&i=${id}`).then(
-    async (response) => {
+async function getMovieById({ id }: { id: string }): Promise<any> {
+  return await fetch(`https://www.omdbapi.com/?apikey=${API_KEY}&i=${id}`)
+    .then(async (response) => {
       const json: any = await response.json();
       return {
-        id: json.imdbID,
-        title: json.Title,
-        year: json.Year,
-        image: json.Poster,
-        description: json.Plot,
-        released: json.Released,
-        genre: json.Genre,
-        actors: json.Actors,
-        director: json.Director,
+        ok: json.Response === "True",
+        error: json?.Error,
+        movie: {
+          id: json.imdbID,
+          title: json.Title,
+          year: json.Year,
+          image: json.Poster,
+          description: json.Plot,
+          released: json.Released,
+          genre: json.Genre,
+          actors: json.Actors,
+          director: json.Director,
+        },
       };
-    }
-  );
+    })
+    .catch((error) => {
+      console.error(error);
+    });
 }
 
 export { searchMovies, getMovieById };

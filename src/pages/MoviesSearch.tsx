@@ -1,10 +1,12 @@
 import useMovies from "../hooks/useMovies";
 import GridList from "../components/GridList";
-import { useCallback, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import debounce from "just-debounce-it";
+import ErrorAlert from "../components/ErrorAlert";
 
 function MoviesSearch() {
   const [errorInput, setErrorInput] = useState<string | null>(null);
+  const isFirstSearch = useRef(true);
 
   const { getMovies, movies, isLoading, error } = useMovies();
 
@@ -17,6 +19,7 @@ function MoviesSearch() {
 
   function handleChange(event: any) {
     const search = event.target.value;
+    isFirstSearch.current = false;
 
     if (search.trim() === "") {
       setErrorInput("Please enter a valid search");
@@ -44,15 +47,15 @@ function MoviesSearch() {
             <div className="text-red-600 text-sm">{errorInput}</div>
           )}
         </div>
-        {error && (
-          <div className=" w-64 h-fit bg-red-600 mt-5 p-3 border rounded-xl border-red-900 text-black text-center">
-            Error: {error}
-          </div>
-        )}
+        <ErrorAlert error={error ?? undefined} />
       </header>
 
       <main className="p-10 w-full">
-        {isLoading ? (
+        {isFirstSearch.current ? (
+          <h1 className="text-center">
+            Welcome, write in the input to search movies!
+          </h1>
+        ) : isLoading ? (
           <div className="text-center">Loading...</div>
         ) : (
           <GridList data={movies} />

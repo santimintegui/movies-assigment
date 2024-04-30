@@ -9,8 +9,13 @@ function useMovieById() {
     setIsLoading(true);
     setError(null);
     getMovieById({ id })
-      .then((data) => {
-        setData(data);
+      .then(({ ok, error, movie }) => {
+        if (!ok) {
+          setData(null);
+          setError(error);
+          return;
+        }
+        setData(movie);
       })
       .catch((error) => {
         setData([]);
