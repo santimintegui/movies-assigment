@@ -37,7 +37,7 @@ function MoviesSearch() {
           <input
             type="text"
             name="search"
-            placeholder="Search movie"
+            placeholder="Avengers,Iron man, etc"
             className={`${
               errorInput ? "border border-red-600" : "border-none"
             } rounded-sm p-1 text-black outline-none w-full`}
@@ -47,7 +47,7 @@ function MoviesSearch() {
             <div className="text-red-600 text-sm">{errorInput}</div>
           )}
         </div>
-        <ErrorAlert error={error ?? undefined} />
+        {!errorInput && <ErrorAlert error={error ?? undefined} />}
       </header>
 
       <main className="p-10 w-full">
