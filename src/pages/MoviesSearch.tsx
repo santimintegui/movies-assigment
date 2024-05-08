@@ -3,11 +3,11 @@ import GridList from "../components/GridList";
 import { useCallback, useRef, useState } from "react";
 import debounce from "just-debounce-it";
 import ErrorAlert from "../components/ErrorAlert";
+import { Loading } from "../components/Icons/Loading";
 
 function MoviesSearch() {
   const [errorInput, setErrorInput] = useState<string | null>(null);
   const isFirstSearch = useRef(true);
-
   const { getMovies, movies, isLoading, error } = useMovies();
 
   const debouncedGetMovies = useCallback(
@@ -52,11 +52,13 @@ function MoviesSearch() {
 
       <main className="p-10 w-full">
         {isFirstSearch.current ? (
-          <h1 className="text-center">
+          <h1 className="text-center text-2xl font-bold animate-pulse">
             Welcome, write in the input to search movies!
           </h1>
         ) : isLoading ? (
-          <div className="text-center">Loading...</div>
+          <div className="flex justify-center">
+            <Loading />
+          </div>
         ) : (
           <GridList data={movies} />
         )}

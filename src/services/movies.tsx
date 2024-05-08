@@ -1,5 +1,3 @@
-// import { Movie } from "../types/movies";
-
 const API_KEY = "9ca2c63b";
 
 async function searchMovies({ search }: { search: string }): Promise<any> {
